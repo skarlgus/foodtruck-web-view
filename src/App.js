@@ -41,7 +41,7 @@ const MainContent = ({ selectedOption }) => {
         </div>
       )}
       {selectedOption === '행사' && <EventList />}
-      {selectedOption === '푸드트럭' && <FoodTruckList />}
+      {selectedOption === '푸드트럭' && <div style={{ marginTop: '1rem' }}><FoodTruckList /></div>}
     </div>
   );
 };
