@@ -106,13 +106,20 @@ const RecipeReviewCard = () => {
               title={loading ? <Skeleton variant="text" width={100} /> : card.title}
               subheader={loading ? <Skeleton variant="text" width={80} /> : card.subheader}
             />
+            
+
+            {loading ?
+            <Stack sx={{ width: '100%', height: '100%' }} alignItems="center" justifyContent="center">
+              <Skeleton variant="rectangular" width="100%" height={180} />
+            </Stack>
+            : 
             <CardMedia
-              component={loading ? 'div' : 'img'}
+              component="img"
               height="194"
-              image={loading ? undefined : card.image}
-              alt="Paella dish"
+              image={loading ? card.image : card.image}
               sx={{ backgroundColor: loading ? 'grey.400' : 'inherit' }}
-            />
+            />}
+            
             <CardContent sx={{ paddingTop: 2 }}>
               {loading ? (
                 <Skeleton variant="rectangular" height={60} />

@@ -16,9 +16,11 @@ const App = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <Router>
-        <AppBar />
-        <main style={{ flex: 1, padding: '1rem', paddingBottom: '63px' }}>
+      <AppBar />
+        <header>
           <CustomizedBreadcrumbs handleChange={handleChange} />
+        </header>
+        <main style={{ flex: 1, padding: '1rem', paddingBottom: '63px' }}>  
           <Routes>
             <Route path="/" element={<MainContent selectedOption={selectedOption} />} />
           </Routes>
