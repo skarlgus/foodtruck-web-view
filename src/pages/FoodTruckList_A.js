@@ -17,6 +17,8 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
+import Skeleton from '@mui/material/Skeleton';
+import Stack from '@mui/material/Stack';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -67,6 +69,15 @@ const cardData = [
 
 const RecipeReviewCard = () => {
   const [expanded, setExpanded] = React.useState(Array(cardData.length).fill(false));
+  const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 300); // 0.5초 후 로딩 상태 해제
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleExpandClick = (index) => {
     const newExpanded = [...expanded];
@@ -81,28 +92,37 @@ const RecipeReviewCard = () => {
           <Card sx={{ width: '100%' }}>
             <CardHeader
               avatar={
-                <Avatar src={card.avatar} aria-label="recipe" />
+                loading ? (
+                  <Skeleton variant="circular" width={40} height={40} />
+                ) : (
+                  <Avatar src={card.avatar} aria-label="recipe" />
+                )
               }
               action={
                 <IconButton aria-label="settings">
                   <MoreVertIcon />
                 </IconButton>
               }
-              title={card.title}
-              subheader={card.subheader}
+              title={loading ? <Skeleton variant="text" width={100} /> : card.title}
+              subheader={loading ? <Skeleton variant="text" width={80} /> : card.subheader}
             />
             <CardMedia
-              component="img"
+              component={loading ? 'div' : 'img'}
               height="194"
-              image={card.image}
+              image={loading ? undefined : card.image}
               alt="Paella dish"
+              sx={{ backgroundColor: loading ? 'grey.400' : 'inherit' }}
             />
-            <CardContent sx={{ paddingTop: 2 }}> {/* 간격 추가 */}
-              <Typography variant="body2" color="text.secondary">
-                {card.description}
-              </Typography>
+            <CardContent sx={{ paddingTop: 2 }}>
+              {loading ? (
+                <Skeleton variant="rectangular" height={60} />
+              ) : (
+                <Typography variant="body2" color="text.secondary">
+                  {card.description}
+                </Typography>
+              )}
             </CardContent>
-            <Divider variant="middle" /> {/* 구분선 추가 */}
+            <Divider variant="middle" />
             <CardActions disableSpacing>
               <IconButton aria-label="add to favorites">
                 <Rating
@@ -125,8 +145,12 @@ const RecipeReviewCard = () => {
             </CardActions>
             <Collapse in={expanded[index]} timeout="auto" unmountOnExit>
               <CardContent sx={{ paddingTop: 0 }}>
-                <Typography variant="body2">{card.operatingHours}</Typography>
-                <Typography variant="body2">{card.additionalInfo}</Typography>
+                <Typography variant="body2">
+                  {loading ? <Skeleton variant="text" width={150} /> : card.operatingHours}
+                </Typography>
+                <Typography variant="body2">
+                  {loading ? <Skeleton variant="text" width={150} /> : card.additionalInfo}
+                </Typography>
               </CardContent>
             </Collapse>
           </Card>

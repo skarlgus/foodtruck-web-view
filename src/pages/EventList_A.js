@@ -5,6 +5,8 @@ import ImageListItemBar from '@mui/material/ImageListItemBar';
 import IconButton from '@mui/material/IconButton';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
+import Skeleton from '@mui/material/Skeleton';
+import Stack from '@mui/material/Stack';
 
 export default function TitlebarImageList() {
   const theme = useTheme();
@@ -20,20 +22,36 @@ export default function TitlebarImageList() {
     cols = Math.floor(window.innerWidth / 300); // 화면 크기에 따라 동적으로 계산
   }
 
+  const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 500); // 0.5초 후 로딩 상태 해제
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <ImageList sx={{ width: '100%', height: 'auto' }} cols={cols} gap={8}>
-      {itemData.map((item) => (
-        <ImageListItem key={item.img} cols={item.cols || 1} rows={item.rows || 1}>
-          <img
-            srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-            src={`${item.img}?w=248&fit=crop&auto=format`}
-            alt={item.title}
-            loading="lazy"
-            style={{ borderRadius: 10 }} // 이미지 아이템의 모서리를 둥글게 설정
-          />
+      {itemData.map((item, index) => (
+        <ImageListItem key={index} cols={item.cols || 1} rows={item.rows || 1}>
+          {loading ? (
+            <Stack sx={{ width: '100%', height: '100%' }} alignItems="center" justifyContent="center">
+              <Skeleton variant="rectangular" width="100%" height={180} />
+            </Stack>
+          ) : (
+            <img
+              srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
+              src={`${item.img}?w=248&fit=crop&auto=format`}
+              alt={item.title}
+              loading="lazy"
+              style={{ borderRadius: 10, width: '100%', height: '100%', objectFit: 'cover' }}
+            />
+          )}
           <ImageListItemBar
-            title={item.title}
-            subtitle={item.author}
+            title={loading ? <Skeleton variant="text" width="80%" /> : item.title}
+            subtitle={loading ? <Skeleton variant="text" width="60%" /> : item.author}
             actionIcon={
               <IconButton
                 sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
