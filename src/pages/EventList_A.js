@@ -2,27 +2,22 @@ import * as React from 'react';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
-import ListSubheader from '@mui/material/ListSubheader';
 import IconButton from '@mui/material/IconButton';
-import InfoIcon from '@mui/icons-material/Info';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
-import EventNoteIcon from '@mui/icons-material/EventNote';
 
 export default function TitlebarImageList() {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const isMediumScreen = useMediaQuery(theme.breakpoints.between('sm', 'md'));
-  const isLargeScreen = useMediaQuery(theme.breakpoints.up('md'));
 
   let cols = 4; // 기본 값
   if (isSmallScreen) {
     cols = 1;
   } else if (isMediumScreen) {
     cols = 2;
-  } else if (isLargeScreen) {
-    cols = 3;
+  } else {
+    cols = Math.floor(window.innerWidth / 300); // 화면 크기에 따라 동적으로 계산
   }
 
   return (
@@ -88,12 +83,11 @@ const itemData = [
     featured: true,
   },
   {
-    img: 'https://lh3.googleusercontent.com/proxy/fBkFhVfyqZYeIfUjhi2Ndl6VxyyDPeILawzChx4PxHrMBi5kHjM2v1mElpYOTOTy8IbE-QcwZzyp7XtPbrB866kKow8M1RonnUKNDYOj6sigLsHUd5Fp5g',
-    title: '관악구 불빛거리 축제 푸드트럭 모집 ',
-    author: '#신림 #불빛거리 #별빛축제 ',
+    img: 'https://cdn.onseoul.net/news/photo/202012/10096_10072_831.jpg',
+    title: '별빛축제 푸드트럭 모집 ',
+    author: '#강남 #대청역 #일원나눔한마당 ',
     rows: 2,
     cols: 2,
     featured: true,
   },
-  
 ];

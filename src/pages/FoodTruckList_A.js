@@ -10,12 +10,13 @@ import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
+import Rating from '@mui/material/Rating';
+import StarIcon from '@mui/icons-material/Star';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Grid from '@mui/material/Grid';
-import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import Box from '@mui/material/Box';
+import Divider from '@mui/material/Divider';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -28,24 +29,39 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
+const labels = {
+  0.5: '0.5',
+  1: '1.0',
+  1.5: '1.5',
+  2: '2.0',
+  2.5: '2.5',
+  3: '3.0',
+  3.5: '3.5',
+  4: '4.0',
+  4.5: '4.5',
+  5: '5.0',
+};
+
 const cardData = [
   {
     title: 'MZ의 coffee',
     subheader: '커피, 기타',
     image: 'https://www.foodtruckfriends.com/files/attach/images/2829585/169/978/007/e848426a1465a964828e0fc15f4b9923.jpg',
-    description:
-      '케냐에서 직접 공수한 루왁커피를 요즘 MZ세대의 입맞에 맞춰 재구성 하였습니다.',
+    avatar: 'https://www.foodtruckfriends.com/files/attach/images/2829585/169/978/007/e848426a1465a964828e0fc15f4b9923.jpg',
+    description: '케냐에서 직접 공수한 루왁커피를 요즘 MZ세대의 입맛에 맞춰 재구성 하였습니다.',
     operatingHours: '운영시간: 매일',
     additionalInfo: 'Tel: 010-1234-3333',
+    rating: 4.0,
   },
   {
     title: '초밥의 끝판완',
     subheader: '초밥, 기타',
     image: 'https://mblogthumb-phinf.pstatic.net/MjAyMDA3MjdfMTk1/MDAxNTk1NzkzMjc3ODQz.GgRNF_eD4AOqDNV9J0dxs7aXV8PUs1UoPb1YVoLH5gEg.M32Xmqs3SI7jrcHs2_QYZhR6DFtAbHYUHkowxJCROIog.JPEG.siy0728/%ED%91%B8%EB%93%9C%ED%8A%B8%EB%9F%AD2.jpg?type=w800',
-    description:
-      '신선한 재료와 전문 초밥셰프가 만드는 현지 일식 초밥을 푸드트럭에서 편안하게 즐기세요.',
+    avatar: '',
+    description: '신선한 재료와 전문 초밥셰프가 만드는 현지 일식 초밥을 푸드트럭에서 편안하게 즐기세요.',
     operatingHours: '운영시간: 월~금',
     additionalInfo: 'Tel: 010-1234-1111',
+    rating: 3.5,
   },
 ];
 
@@ -65,9 +81,7 @@ const RecipeReviewCard = () => {
           <Card sx={{ width: '100%' }}>
             <CardHeader
               avatar={
-                <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                  R
-                </Avatar>
+                <Avatar src={card.avatar} aria-label="recipe" />
               }
               action={
                 <IconButton aria-label="settings">
@@ -83,17 +97,22 @@ const RecipeReviewCard = () => {
               image={card.image}
               alt="Paella dish"
             />
-            <CardContent sx={{ paddingTop: 0 }}>
+            <CardContent sx={{ paddingTop: 2 }}> {/* 간격 추가 */}
               <Typography variant="body2" color="text.secondary">
                 {card.description}
               </Typography>
             </CardContent>
+            <Divider variant="middle" /> {/* 구분선 추가 */}
             <CardActions disableSpacing>
               <IconButton aria-label="add to favorites">
-                <FavoriteIcon />
-              </IconButton>
-              <IconButton aria-label="share">
-                <ShareIcon />
+                <Rating
+                  name="text-feedback"
+                  value={card.rating}
+                  readOnly
+                  precision={0.5}
+                  emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
+                />
+                <Box sx={{ ml: 1, fontSize: '0.875rem' }}>{labels[card.rating]}</Box>
               </IconButton>
               <ExpandMore
                 expand={expanded[index]}
