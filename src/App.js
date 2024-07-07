@@ -1,28 +1,31 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import Home from './pages/Home';
-import MyPage from './pages/MyPage';
-import Section1 from './pages/Section1'; // Section1 컴포넌트를 임포트
-import './App.css';
+import AppBar from './components/AppBar';
+import AppFooter from './components/AppFooter';
+import EventList_A from './pages/EventList_A';
+import EventList_B from './pages/EventList_B';
+import FoodTruckList_A from './pages/FoodTruckList_A';
 
-function App() {
-  return (
+const App = () => (
+  <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
     <Router>
-      <div className="App">
-        <Header />
-        <main>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/mypage" element={<MyPage />} />
-            <Route path="/section1" element={<Section1 />} /> {/* Section1 경로 추가 */}
-          </Routes>
-        </main>
-        <Footer />
-      </div>
+      <AppBar />
+      <main style={{ flex: 1, padding: '1rem', paddingBottom: '63px' }}>
+        <Routes>
+          <Route 
+            path="/" 
+            element={
+              <div>
+                <EventList_A />
+                <FoodTruckList_A />
+              </div>
+            } 
+          />
+        </Routes>
+      </main>
+      <AppFooter />
     </Router>
-  );
-}
+  </div>
+);
 
 export default App;
