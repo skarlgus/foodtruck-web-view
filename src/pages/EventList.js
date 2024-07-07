@@ -27,7 +27,7 @@ export default function TitlebarImageList() {
   React.useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 500); // 0.5초 후 로딩 상태 해제
+    }, 300); // 0.5초 후 로딩 상태 해제
 
     return () => clearTimeout(timer);
   }, []);

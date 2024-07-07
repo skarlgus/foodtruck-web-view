@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import AppBar from './components/AppBar';
 import AppFooter from './components/AppFooter';
-import EventList_A from './pages/EventList_A';
-import FoodTruckList_A from './pages/FoodTruckList_A';
+import EventList from './pages/EventList';
+import FoodTruckList from './pages/FoodTruckList';
 import CustomizedBreadcrumbs from './components/CustomizedBreadcrumbs';
 
 const App = () => {
@@ -34,12 +34,12 @@ const MainContent = ({ selectedOption }) => {
     <div>
       {selectedOption === '전체' && (
         <div>
-          <EventList_A />
-          <FoodTruckList_A />
+          <EventList />
+          <FoodTruckList />
         </div>
       )}
-      {selectedOption === '행사' && <EventList_A />}
-      {selectedOption === '푸드트럭' && <div style={{ marginTop: '1rem' }}><FoodTruckList_A /></div>}
+      {selectedOption === '행사' && <EventList />}
+      {selectedOption === '푸드트럭' && <FoodTruckList />}
     </div>
   );
 };
